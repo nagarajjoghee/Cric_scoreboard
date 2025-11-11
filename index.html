@@ -3,7 +3,7 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Premier T20 Scoreboard</title>
+    <title>NECA Tournament Scoreboard</title>
     <link rel="preconnect" href="https://fonts.googleapis.com">
     <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
     <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700&family=Bebas+Neue&family=Poppins:wght@500;600&display=swap" rel="stylesheet">
@@ -13,17 +13,115 @@
 <body>
     <div class="stadium-backdrop"></div>
     <div class="lights-overlay"></div>
+
+    <div class="setup-modal" id="setupModal">
+        <div class="setup-card">
+            <header class="setup-header">
+                <div>
+                    <span class="tag tag-light">Pre-Match</span>
+                    <h2>NECA Tournament Setup</h2>
+                    <p class="setup-subtitle">Fill in the match sheet before the first ball is bowled.</p>
+                </div>
+                <button type="button" class="btn outline setup-close" id="dismissSetupBtn">Close</button>
+            </header>
+            <form id="setupForm" class="setup-form">
+                <section class="setup-section">
+                    <h3>Match Sheet</h3>
+                    <div class="field-grid">
+                        <label>
+                            <span>Tournament / Series</span>
+                            <input type="text" id="matchTypeSetup" value="NECA Tournament" required>
+                        </label>
+                        <label>
+                            <span>Fixture Title</span>
+                            <input type="text" id="matchTitleSetup" placeholder="Qualifier 1 · NECA League" required>
+                        </label>
+                        <label>
+                            <span>Venue</span>
+                            <input type="text" id="matchVenueSetup" placeholder="NECA Cricket Arena" required>
+                        </label>
+                        <label>
+                            <span>Date &amp; Time</span>
+                            <input type="text" id="matchTimeSetup" placeholder="Nov 12 · 7:30 PM" required>
+                        </label>
+                        <label>
+                            <span>Total Overs</span>
+                            <input type="number" id="oversSetup" min="1" max="50" value="20" required>
+                        </label>
+                        <label>
+                            <span>Target Runs (optional)</span>
+                            <input type="number" id="targetSetup" min="0" placeholder="Leave empty for 1st innings">
+                        </label>
+                        <label class="toggle">
+                            <input type="checkbox" id="chasingSetup">
+                            <span>Batting side is chasing a target</span>
+                        </label>
+                    </div>
+                </section>
+
+                <section class="setup-section two-column">
+                    <div>
+                        <div class="section-heading">
+                            <h3>Team One</h3>
+                            <label class="inline-input">
+                                <span>Team Name</span>
+                                <input type="text" id="teamOneNameInput" placeholder="Team Aurora" required>
+                            </label>
+                        </div>
+                        <label>
+                            <span>Playing XI (one per line)</span>
+                            <textarea id="teamOnePlayersInput" rows="11" placeholder="Player 1&#10;Player 2&#10;..." required></textarea>
+                        </label>
+                    </div>
+                    <div>
+                        <div class="section-heading">
+                            <h3>Team Two</h3>
+                            <label class="inline-input">
+                                <span>Team Name</span>
+                                <input type="text" id="teamTwoNameInput" placeholder="Team Eclipse" required>
+                            </label>
+                        </div>
+                        <label>
+                            <span>Playing XI (one per line)</span>
+                            <textarea id="teamTwoPlayersInput" rows="11" placeholder="Player 1&#10;Player 2&#10;..." required></textarea>
+                        </label>
+                    </div>
+                </section>
+
+                <section class="setup-section">
+                    <h3>Who bats first?</h3>
+                    <div class="radio-row">
+                        <label>
+                            <input type="radio" name="battingOrder" value="teamOne" checked>
+                            <span>Team One starts innings</span>
+                        </label>
+                        <label>
+                            <input type="radio" name="battingOrder" value="teamTwo">
+                            <span>Team Two starts innings</span>
+                        </label>
+                    </div>
+                </section>
+
+                <footer class="setup-footer">
+                    <button type="button" class="btn neutral" id="clearFormBtn">Clear Form</button>
+                    <button type="submit" class="btn start">Start Match</button>
+                </footer>
+            </form>
+        </div>
+    </div>
+
     <main class="layout">
         <header class="match-header">
             <div class="header-left">
-                <span class="tag" id="matchTypeDisplay">T20 International</span>
-                <h1 id="matchTitleDisplay">Neon Premier League</h1>
+                <span class="tag" id="matchTypeDisplay">NECA Tournament</span>
+                <h1 id="matchTitleDisplay">Awaiting Fixture</h1>
                 <div class="meta">
-                    <span id="matchVenueDisplay">Eden Gardens, Kolkata</span>
-                    <span id="matchTimeDisplay">Tonight · 7:30 PM IST</span>
+                    <span id="matchVenueDisplay">Venue to be confirmed</span>
+                    <span id="matchTimeDisplay">Set during setup</span>
                 </div>
             </div>
             <div class="header-right">
+                <button class="btn outline reopen-setup" id="openSetupBtn">Match Setup</button>
                 <div class="target-card" id="targetCard">
                     <span>Target</span>
                     <strong id="targetRunsDisplay">—</strong>
@@ -155,54 +253,6 @@
             </section>
 
             <aside class="control-panel">
-                <section class="panel-block">
-                    <h3>Match Settings</h3>
-                    <div class="field-grid">
-                        <label>
-                            <span>Match Type</span>
-                            <input type="text" id="matchTypeInput" value="T20 International">
-                        </label>
-                        <label>
-                            <span>Title</span>
-                            <input type="text" id="matchTitleInput" value="Neon Premier League">
-                        </label>
-                        <label>
-                            <span>Venue</span>
-                            <input type="text" id="matchVenueInput" value="Eden Gardens, Kolkata">
-                        </label>
-                        <label>
-                            <span>Timing</span>
-                            <input type="text" id="matchTimeInput" value="Tonight · 7:30 PM IST">
-                        </label>
-                        <label>
-                            <span>Overs</span>
-                            <input type="number" id="oversInput" min="1" max="50" value="20">
-                        </label>
-                        <label>
-                            <span>Target Runs</span>
-                            <input type="number" id="targetInput" min="0" value="0">
-                        </label>
-                        <label class="toggle">
-                            <input type="checkbox" id="chasingToggle">
-                            <span>Batting side is chasing</span>
-                        </label>
-                    </div>
-                </section>
-
-                    <section class="panel-block">
-                    <h3>Teams</h3>
-                    <div class="field-grid">
-                        <label>
-                            <span>Batting Team</span>
-                            <input type="text" id="battingTeamInput" value="Team Aurora">
-                        </label>
-                        <label>
-                            <span>Bowling Team</span>
-                            <input type="text" id="bowlingTeamInput" value="Team Eclipse">
-                        </label>
-                    </div>
-                </section>
-
                 <section class="panel-block">
                     <h3>Current Batters</h3>
                     <div class="field-grid">
