@@ -1,0 +1,259 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Premier T20 Scoreboard</title>
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700&family=Bebas+Neue&family=Poppins:wght@500;600&display=swap" rel="stylesheet">
+    <link rel="stylesheet" href="styles.css">
+    <script defer src="script.js"></script>
+</head>
+<body>
+    <div class="stadium-backdrop"></div>
+    <div class="lights-overlay"></div>
+    <main class="layout">
+        <header class="match-header">
+            <div class="header-left">
+                <span class="tag" id="matchTypeDisplay">T20 International</span>
+                <h1 id="matchTitleDisplay">Neon Premier League</h1>
+                <div class="meta">
+                    <span id="matchVenueDisplay">Eden Gardens, Kolkata</span>
+                    <span id="matchTimeDisplay">Tonight · 7:30 PM IST</span>
+                </div>
+            </div>
+            <div class="header-right">
+                <div class="target-card" id="targetCard">
+                    <span>Target</span>
+                    <strong id="targetRunsDisplay">—</strong>
+                </div>
+                <div class="innings-tag">
+                    <span id="inningsProgressLabel">1st Innings</span>
+                    <span id="oversRemainingDisplay">20.0 overs left</span>
+                </div>
+            </div>
+        </header>
+
+        <div class="main-grid">
+            <section class="scoreboard-panel">
+                <section class="primary-scoreboard">
+                    <span class="live-pill" id="liveStatus">Live • 20 Overs</span>
+                    <div class="team-strip">
+                        <div class="team-card batting">
+                            <span class="team-label">Batting</span>
+                            <h2 class="team-name" id="battingTeamName">Team Aurora</h2>
+                        </div>
+                        <div class="score-card">
+                            <div class="runs">
+                                <span id="scoreRuns">0</span>/<span id="scoreWickets">0</span>
+                            </div>
+                            <div class="overs">
+                                Overs <span id="scoreOvers">0.0</span>
+                            </div>
+                        </div>
+                        <div class="metrics">
+                            <div class="metric">
+                                <span>CRR</span>
+                                <strong id="currentRunRate">0.00</strong>
+                            </div>
+                            <div class="metric">
+                                <span>Projected</span>
+                                <strong id="projectedScore">0</strong>
+                            </div>
+                            <div class="metric" id="requiredRateMetric">
+                                <span>RRR</span>
+                                <strong id="requiredRunRate">—</strong>
+                            </div>
+                        </div>
+                        <div class="team-card bowling">
+                            <span class="team-label">Bowling</span>
+                            <h2 class="team-name" id="bowlingTeamName">Team Eclipse</h2>
+                        </div>
+                    </div>
+                    <div class="status-strip">
+                        <div class="status-item">
+                            <span>Partnership</span>
+                            <strong id="partnershipDisplay">0 (0)</strong>
+                        </div>
+                        <div class="status-item">
+                            <span>Powerplay</span>
+                            <strong id="powerplayDisplay">0/0 (0.0)</strong>
+                        </div>
+                        <div class="status-item">
+                            <span>Last Six Balls</span>
+                            <div class="balls-track" id="lastBallsTrack">
+                                <span class="ball empty">•</span>
+                                <span class="ball empty">•</span>
+                                <span class="ball empty">•</span>
+                                <span class="ball empty">•</span>
+                                <span class="ball empty">•</span>
+                                <span class="ball empty">•</span>
+                            </div>
+                        </div>
+                    </div>
+                </section>
+
+                <section class="batting-card">
+                    <div class="section-heading">
+                        <h2>Batting Card</h2>
+                        <div class="mini-info">
+                            <span>Projected finish · <strong id="projectedFinishDisplay">0/0</strong></span>
+                        </div>
+                    </div>
+                    <div class="table-wrap">
+                        <table>
+                            <thead>
+                                <tr>
+                                    <th>Batter</th>
+                                    <th>R</th>
+                                    <th>B</th>
+                                    <th>4s</th>
+                                    <th>6s</th>
+                                    <th>SR</th>
+                                    <th>Status</th>
+                                </tr>
+                            </thead>
+                            <tbody id="battingTableBody">
+                            </tbody>
+                        </table>
+                    </div>
+                    <div class="card-footer">
+                        <div class="info-pill">
+                            <span>Extras</span>
+                            <strong id="extrasDisplay">0 (0b, 0lb, 0nb, 0wd, 0p)</strong>
+                        </div>
+                        <div class="info-pill">
+                            <span>Fall of Wickets</span>
+                            <strong id="fowDisplay">—</strong>
+                        </div>
+                    </div>
+                </section>
+
+                <section class="analytics-grid">
+                    <div class="analytics-card">
+                        <span class="label">Required</span>
+                        <strong id="requiredRunsDisplay">—</strong>
+                        <span class="hint">Runs to win</span>
+                    </div>
+                    <div class="analytics-card">
+                        <span class="label">Balls Left</span>
+                        <strong id="ballsLeftDisplay">120</strong>
+                        <span class="hint">overs remaining</span>
+                    </div>
+                    <div class="analytics-card">
+                        <span class="label">Current Over</span>
+                        <strong id="currentOverSummary">—</strong>
+                        <span class="hint">ball-by-ball</span>
+                    </div>
+                    <div class="analytics-card">
+                        <span class="label">Run Momentum</span>
+                        <div class="sparkline" id="runSparkline"></div>
+                        <span class="hint">Last 6 overs</span>
+                    </div>
+                </section>
+            </section>
+
+            <aside class="control-panel">
+                <section class="panel-block">
+                    <h3>Match Settings</h3>
+                    <div class="field-grid">
+                        <label>
+                            <span>Match Type</span>
+                            <input type="text" id="matchTypeInput" value="T20 International">
+                        </label>
+                        <label>
+                            <span>Title</span>
+                            <input type="text" id="matchTitleInput" value="Neon Premier League">
+                        </label>
+                        <label>
+                            <span>Venue</span>
+                            <input type="text" id="matchVenueInput" value="Eden Gardens, Kolkata">
+                        </label>
+                        <label>
+                            <span>Timing</span>
+                            <input type="text" id="matchTimeInput" value="Tonight · 7:30 PM IST">
+                        </label>
+                        <label>
+                            <span>Overs</span>
+                            <input type="number" id="oversInput" min="1" max="50" value="20">
+                        </label>
+                        <label>
+                            <span>Target Runs</span>
+                            <input type="number" id="targetInput" min="0" value="0">
+                        </label>
+                        <label class="toggle">
+                            <input type="checkbox" id="chasingToggle">
+                            <span>Batting side is chasing</span>
+                        </label>
+                    </div>
+                </section>
+
+                    <section class="panel-block">
+                    <h3>Teams</h3>
+                    <div class="field-grid">
+                        <label>
+                            <span>Batting Team</span>
+                            <input type="text" id="battingTeamInput" value="Team Aurora">
+                        </label>
+                        <label>
+                            <span>Bowling Team</span>
+                            <input type="text" id="bowlingTeamInput" value="Team Eclipse">
+                        </label>
+                    </div>
+                </section>
+
+                <section class="panel-block">
+                    <h3>Current Batters</h3>
+                    <div class="field-grid">
+                        <label>
+                            <span>Striker</span>
+                            <input type="text" id="strikerInput" value="Batter 1">
+                        </label>
+                        <label>
+                            <span>Non-striker</span>
+                            <input type="text" id="nonStrikerInput" value="Batter 2">
+                        </label>
+                    </div>
+                    <button class="btn secondary" id="updateBattersBtn">Update Names</button>
+                </section>
+
+                <section class="panel-block">
+                    <h3>Scoring Controls</h3>
+                    <div class="button-grid runs">
+                        <button class="btn run" data-runs="0">Dot</button>
+                        <button class="btn run" data-runs="1">1 Run</button>
+                        <button class="btn run" data-runs="2">2 Runs</button>
+                        <button class="btn run" data-runs="3">3 Runs</button>
+                        <button class="btn run highlight" data-runs="4">Four</button>
+                        <button class="btn run highlight" data-runs="6">Six</button>
+                    </div>
+                    <div class="button-grid extras">
+                        <button class="btn extra" data-extra="wide">Wide +1</button>
+                        <button class="btn extra" data-extra="noBall">No Ball +1</button>
+                        <button class="btn extra" data-extra="bye">Bye +1</button>
+                        <button class="btn extra" data-extra="legBye">Leg Bye +1</button>
+                        <button class="btn extra" data-extra="penalty">Penalty +5</button>
+                    </div>
+                    <div class="button-grid wicket">
+                        <button class="btn danger" id="wicketBtn">Wicket</button>
+                        <button class="btn neutral" id="swapStrikeBtn">Swap Strike</button>
+                        <button class="btn neutral" id="undoBtn">Undo</button>
+                    </div>
+                </section>
+
+                <section class="panel-block">
+                    <h3>Utilities</h3>
+                    <div class="utilities">
+                        <button class="btn outline" id="resetBtn">Reset Innings</button>
+                        <p class="tip">Tip: Keep the controls on a tablet beside the scorer's desk for a premium matchday feel.</p>
+                    </div>
+                </section>
+            </aside>
+        </div>
+    </main>
+
+    <div id="newBatterToast" class="toast hidden"></div>
+</body>
+</html>
+
